@@ -1,0 +1,69 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<div class="block block-calculation-list">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Calculation History')) ?></strong></div>
+    <div class="block-content">
+        <?php if ($_Calculations = $block->getAdditionalCalculations()) : ?>
+
+            <div class="table-wrapper ">
+                <table class="data table table-calculation-items history" id="additional-calculation-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Calculation History')) ?></caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="col inputleft"><?= $block->escapeHtml(__('Input 1')) ?></th>
+                        <th scope="col" class="col operation"><?= $block->escapeHtml(__('Operation')) ?></th>
+                        <th scope="col" class="col inputright"><?= $block->escapeHtml(__('Input 2')) ?></th>
+                        <th scope="col" class="col result"><?= $block->escapeHtml(__('Result')) ?></th>
+                        <th scope="col" class="col actions"> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($_Calculations as $calc) : ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('Input 1')) ?>" class="col inputleft"><?= $block->escapeHtml($calc->getInputleft()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Operation')) ?>" class="col operation"><?= $block->escapeHtml($calc->getOperation()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Input 2')) ?>" class="col inputright"><?= $block->escapeHtml($calc->getInputright()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Result')) ?>" class="col result"><?= $block->escapeHtml($calc->getResult()) ?></td>
+                            <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                                <?php /*<a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/calculation/edit', ['id' => $calc->getId()])) ?>"><span><?= $block->escapeHtml(__('Edit')) ?></span></a> */ ?>
+                                <a class="action delete" href="#" role="delete-calculation" data-address="<?= $block->escapeHtmlAttr($calc->getId()) ?>"><span><?= $block->escapeHtml(__('Delete')) ?></span></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php if ($block->getChildHtml('pager')) : ?>
+                <div class="customer-addresses-toolbar toolbar bottom"><?= $block->getChildHtml('pager') ?></div>
+            <?php endif ?>
+        <?php else : ?>
+            <p class="empty"><?= $block->escapeHtml(__('You have no calculation entries.')) ?></p>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="actions-toolbar">
+    <div class="primary">
+        <button type="button" role="add-calculation-entry" title="<?= $block->escapeHtmlAttr(__('Add New Calculation')) ?>" class="action primary add"><span><?= $block->escapeHtml(__('Add New Calculation')) ?></span></button>
+    </div>
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        ".page-main": {
+            "calculation": {
+                "deleteCalculation": "td a[role='delete-calculation']",
+                "deleteUrlPrefix": "<?= $block->escapeJs($block->escapeUrl($block->getDeleteUrl())) ?>id/",
+                "addCalculationEntry": "button[role='add-calculation-entry']",
+                "addCalculationLocation": "<?= $block->escapeJs($block->escapeUrl($block->getAddAddressUrl())) ?>"
+            }
+        }
+    }
+</script>

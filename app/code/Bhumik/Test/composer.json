@@ -1,0 +1,22 @@
+{
+    "name": "bhumik/module-test",
+    "description": "Customer Calculations",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Bhumik Panchal",
+            "email": "bhumikpanchal30@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Bhumik\\Test\\": ""
+        }
+    }
+}
